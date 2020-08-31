@@ -19,7 +19,7 @@ services:
     restart: always
     networks:
       - springcloud
-    depends_on: 
+    depends_on:
       - config-server
       - service-eureka-server
   service-items:
@@ -29,26 +29,26 @@ services:
     restart: always
     networks:
       - springcloud
-    depends_on: 
+    depends_on:
       - config-server
       - service-eureka-server
       - service-products
-   service-users:
+  service-users:
     image: service-users:v1
     restart: always
     networks:
       - springcloud
-    depends_on: 
+    depends_on:
       - config-server
       - service-eureka-server
-   service-oauth:
+  service-oauth:
     image: service-oauth:v1
     ports:
       - "9100:9100"
     restart: always
     networks:
       - springcloud
-    depends_on: 
+    depends_on:
       - config-server
       - service-eureka-server
       - service-users
@@ -59,7 +59,7 @@ services:
     restart: always
     networks:
       - springcloud
-    depends_on: 
+    depends_on:
       - config-server
       - service-eureka-server
       - service-products
