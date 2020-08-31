@@ -1,0 +1,70 @@
+version: '3'
+services:
+  config-server:
+    image: config-server:v1
+    ports:
+      - "8888:8888"
+    restart: always
+    networks:
+      - springcloud
+  service-eureka-server:
+    image: service-eureka-server:v1
+    ports:
+      - "8761:8761"
+    restart: always
+    networks:
+      - springcloud
+  service-products:
+    image: service-products:v1
+    restart: always
+    networks:
+      - springcloud
+    depends_on: 
+      - config-server
+      - service-eureka-server
+  service-items:
+    image: service-items:v1
+    ports:
+      - "9191:9191"
+    restart: always
+    networks:
+      - springcloud
+    depends_on: 
+      - config-server
+      - service-eureka-server
+      - service-products
+   service-users:
+    image: service-users:v1
+    restart: always
+    networks:
+      - springcloud
+    depends_on: 
+      - config-server
+      - service-eureka-server
+   service-oauth:
+    image: service-oauth:v1
+    ports:
+      - "9100:9100"
+    restart: always
+    networks:
+      - springcloud
+    depends_on: 
+      - config-server
+      - service-eureka-server
+      - service-users
+  service-zuul-server:
+    image: service-zuul-server:v1
+    ports:
+      - "8090:8090"
+    restart: always
+    networks:
+      - springcloud
+    depends_on: 
+      - config-server
+      - service-eureka-server
+      - service-products
+      - service-items
+      - service-users
+      - service-oauth
+networks:
+  springcloud:
